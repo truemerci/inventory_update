@@ -1,3 +1,6 @@
+inventory = []
+
+
 def search():
     my_search = input("Enter the name or description of the product: ")
     try:
@@ -85,4 +88,3 @@ if __name__ == '__main__':
                 raise ValueError("No such operation exists.")
         except ValueError as e:
             print(e)
-
