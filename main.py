@@ -1,13 +1,13 @@
-inventory = []
-
-
 def search():
     my_search = input("Enter the name or description of the product: ")
-    for i in inventory:
-        if my_search == i['name'] or my_search in i['descriptions']:
-            print(i['name'])
+    try:
+        for i in inventory:
+            if my_search == i['name'] or my_search in i['descriptions']:
+                print(i['name'])
         else:
-            print(f"Product with this description {my_search} was not found")
+            raise KeyError(f"Product with this description '{my_search}' was not found")
+    except KeyError as exc:
+        print(exc)
 
 
 def update():
@@ -17,28 +17,26 @@ def update():
             if inventory[i]['name'] == my_name:
                 update_quantity = int(input("Enter new quantity: "))
                 inventory[i]['quantity'] = update_quantity
+                print("Quantity updated.")
                 break
         else:
             raise ValueError(f"No such name '{my_name}'")
     except ValueError as ex:
         print(ex)
-    finally:
-        print("Quantity updated.")
 
 
 def delete():
     del_name = input("Enter the name you want to delete: ")
     try:
         for i in inventory:
-            if del_name in i.values():
+            if del_name in i['name']:
                 inventory.remove(i)
+                print("Product deleted.")
                 break
         else:
             raise ValueError(f"There is no such '{del_name}' product")
     except ValueError as exc:
         print(exc)
-    finally:
-        print("Product deleted.")
 
 
 def add_inventory():
@@ -87,3 +85,4 @@ if __name__ == '__main__':
                 raise ValueError("No such operation exists.")
         except ValueError as e:
             print(e)
+
